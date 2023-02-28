@@ -130,9 +130,12 @@ func defaultHeaderForwarder(header string) bool {
 // The cookie name is specified by the TokenCookieName value.
 //
 // example:
-//   Sec-Websocket-Protocol: Bearer, foobar
+//
+//	Sec-Websocket-Protocol: Bearer, foobar
+//
 // is converted to:
-//   Authorization: Bearer foobar
+//
+//	Authorization: Bearer foobar
 //
 // Method can be overwritten with the MethodOverrideParam get parameter in the requested URL
 func WebsocketProxy(h http.Handler, opts ...Option) http.Handler {
@@ -161,7 +164,7 @@ func isClosedConnError(err error) bool {
 	if strings.Contains(str, "use of closed network connection") {
 		return true
 	}
-	return websocket.IsCloseError(err, websocket.CloseNormalClosure, websocket.CloseGoingAway)
+	return websocket.IsCloseError(err, websocket.CloseNormalClosure, websocket.CloseGoingAway, websocket.CloseAbnormalClosure)
 }
 
 func (p *Proxy) proxy(w http.ResponseWriter, r *http.Request) {
